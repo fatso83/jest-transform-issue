@@ -8,7 +8,7 @@ const originalProcess = babelJest.process;
 const originalProcessAsync = babelJest.processAsync;
 
 const myExports = {
-  ...babelJest,
+    ...babelJest, // commenting this out works for some reason
   process(src, filename, options) {
     throw new Error("hei");
     const basename = path.basename(filename);
@@ -24,4 +24,20 @@ const myExports = {
   },
 };
 
-Object.assign(module.exports, myExports);
+//console.log(babelJest);
+//console.log(Object.keys(babelJest));
+//module.exports = babelJest;
+
+// does not work
+//Object.assign(module.exports, myExports);
+
+// does not work
+module.exports = myExports;
+console.log(module.exports);
+
+// does not work
+//module.exports = { ...myExports };
+
+console.log(myExports.process.toString());
+console.log("property descriptors of myExports");
+console.log(Object.getOwnPropertyDescriptors(myExports));
